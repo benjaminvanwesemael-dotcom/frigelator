@@ -260,3 +260,59 @@ header {
 .loading { text-align: center; padding: 40px; color: var(--muted); font-size: 0.85rem; }
 .dot-anim::after { content: '...'; animation: dots 1.2s steps(4,end) infinite; }
 @keyframes dots { 0%,20%{content:''} 40%{content:'.'} 60%{content:'..'} 80%,100%{content:'...'} }
+/* Stats bar - compact */
+.stats-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.stats-bar-item { display: flex; align-items: center; gap: 5px; }
+.stats-bar-item strong { color: var(--text); font-family: var(--font-head); font-size: 0.9rem; }
+.stats-bar-item.warn { color: var(--warn); }
+.stats-bar-item.warn strong { color: var(--warn); }
+.stats-bar-sep { color: var(--border); font-size: 1rem; }
+
+/* Quantity controls */
+.item-qty-row {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  font-family: var(--font-head);
+  font-weight: 700;
+  line-height: 1;
+}
+.qty-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(14,165,233,0.06); }
+.qty-value {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 60px;
+  text-align: center;
+}

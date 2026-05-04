@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { CATS } from '../utils/cats'
 import { daysLeft } from '../utils/expiry'
 
-function pctColor(p) { return p > 50 ? '#69f0ae' : p > 20 ? '#ffb74d' : '#ff5370' }
+function pctColor(p) { return p > 50 ? '#059669' : p > 20 ? '#d97706' : '#e03e5c' }
 function pctClass(p) { return p > 50 ? 'pct-high' : p > 20 ? 'pct-mid' : 'pct-low' }
 
-export default function ItemCard({ item, onDelete, onUpdatePercentage }) {
+export default function ItemCard({ item, onDelete, onUpdatePercentage, onUpdateQuantity }) {
   const [pct, setPct] = useState(item.percentage ?? 100)
-  const timerRef = { current: null }
+  const [qty, setQty] = useState(item.quantity ?? 1)
+  const timerRef = useRef(null)
+  const qtyTimerRef = useRef(null)
 
   const loc = (item.location || 'frigo').toLowerCase()
   const isFrigo = loc === 'frigo'
@@ -16,6 +18,8 @@ export default function ItemCard({ item, onDelete, onUpdatePercentage }) {
   const n = daysLeft(item.expiry_date)
   const status = n === null ? null : n < 0 ? 'expired' : n <= 2 ? 'soon' : 'ok'
   const itemCls = status === 'soon' ? 'expiry-soon' : status === 'expired' ? 'expiry-expired' : ''
+
+  const hasUnit = item.unit && item.unit.trim() !== ''
 
   const expiryLabel = () => {
     if (n === null) return null
@@ -33,6 +37,13 @@ export default function ItemCard({ item, onDelete, onUpdatePercentage }) {
     timerRef.current = setTimeout(() => onUpdatePercentage(item.id, v), 600)
   }
 
+  const handleQty = (delta) => {
+    const newQty = Math.max(0, qty + delta)
+    setQty(newQty)
+    clearTimeout(qtyTimerRef.current)
+    qtyTimerRef.current = setTimeout(() => onUpdateQuantity(item.id, newQty), 600)
+  }
+
   return (
     <div className={`item ${itemCls}`}>
       <div className="item-main">
@@ -42,8 +53,8 @@ export default function ItemCard({ item, onDelete, onUpdatePercentage }) {
         <div className="item-info">
           <div className="item-name">{item.name}</div>
           <div className="item-meta">
-            {(item.quantity || item.unit) && (
-              <span>{[item.quantity, item.unit].filter(Boolean).join(' ')}</span>
+            {hasUnit && !item.unit.includes('stuks') && (
+              <span>{[qty, item.unit].filter(Boolean).join(' ')}</span>
             )}
             <span
               className="cat-badge"
@@ -63,6 +74,17 @@ export default function ItemCard({ item, onDelete, onUpdatePercentage }) {
         </span>
         <button className="btn-del" onClick={() => onDelete(item.id, item.name)} title="Verwijderen">✕</button>
       </div>
+
+      {hasUnit && (
+        <div className="item-qty-row">
+          <span className="slider-label">Aantal</span>
+          <div className="qty-controls">
+            <button className="qty-btn" onClick={() => handleQty(-1)}>−</button>
+            <span className="qty-value">{qty} {item.unit}</span>
+            <button className="qty-btn" onClick={() => handleQty(1)}>+</button>
+          </div>
+        </div>
+      )}
 
       <div className="item-slider-row">
         <span className="slider-label">Nog aanwezig</span>

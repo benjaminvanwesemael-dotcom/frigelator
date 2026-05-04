@@ -6,18 +6,27 @@ export default function Stats({ items }) {
     return n !== null && n <= 2
   }).length
 
+  const frigoCount = items.filter(i => (i.location || '').toLowerCase() === 'frigo').length
+  const diepvriesCount = items.filter(i => (i.location || '').toLowerCase() === 'diepvries').length
+
   return (
     <>
-      <div className="stats">
-        <div className="stat-chip">Totaal <strong>{items.length}</strong></div>
-        <div className="stat-chip">🧊 Frigo <strong>{items.filter(i => (i.location || '').toLowerCase() === 'frigo').length}</strong></div>
-        <div className="stat-chip">❄️ Diepvries <strong>{items.filter(i => (i.location || '').toLowerCase() === 'diepvries').length}</strong></div>
-        <div
-          className="stat-chip"
-          style={warnCount > 0 ? { borderColor: 'rgba(255,183,77,0.4)', color: 'var(--warn)' } : {}}
-        >
-          ⚠️ Bijna vervallen <strong>{warnCount}</strong>
-        </div>
+      <div className="stats-bar">
+        <span className="stats-bar-item">
+          🧊 Frigo <strong>{frigoCount}</strong>
+        </span>
+        <span className="stats-bar-sep">·</span>
+        <span className="stats-bar-item">
+          ❄️ Diepvries <strong>{diepvriesCount}</strong>
+        </span>
+        {warnCount > 0 && (
+          <>
+            <span className="stats-bar-sep">·</span>
+            <span className="stats-bar-item warn">
+              ⚠️ <strong>{warnCount}</strong> bijna vervallen
+            </span>
+          </>
+        )}
       </div>
 
       {warnCount > 0 && (

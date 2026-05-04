@@ -54,6 +54,11 @@ export default function App() {
     await supabase.from('items').update({ percentage }).eq('id', id)
   }
 
+const updateQuantity = async (id, quantity) => {
+  setItems(prev => prev.map(i => i.id === id ? { ...i, quantity } : i))
+  await supabase.from('items').update({ quantity }).eq('id', id)
+}
+
   const filtered = items.filter(i => {
     const locMatch = filterLoc === 'all' || (i.location || 'frigo').toLowerCase() === filterLoc
     const catMatch = filterCat === 'all' || (i.category || 'overige').toLowerCase() === filterCat
@@ -104,11 +109,12 @@ export default function App() {
 
       <AddItem onAdd={addItem} showToast={showToast} />
       <ItemList
-        items={filtered}
-        loading={loading}
-        onDelete={deleteItem}
-        onUpdatePercentage={updatePercentage}
-      />
+  items={filtered}
+  loading={loading}
+  onDelete={deleteItem}
+  onUpdatePercentage={updatePercentage}
+  onUpdateQuantity={updateQuantity}
+/>
 
       {toast && (
         <div className={`toast show ${toast.type}`}>{toast.msg}</div>
