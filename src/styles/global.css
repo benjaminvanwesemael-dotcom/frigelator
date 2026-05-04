@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap');
  
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
@@ -15,8 +15,8 @@
   --ok: #059669;
   --text: #0f2136;
   --muted: #5a7a99;
-  --font-head: 'Syne', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-head: 'Plus Jakarta Sans', sans-serif;
+--font-mono: 'Plus Jakarta Sans', sans-serif;
 }
  
 body {
