@@ -1,24 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap');
-
+ 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
 :root {
-  --bg: #0d1117;
-  --surface: #161b22;
-  --surface2: #1c2230;
-  --border: #2a3340;
-  --cold: #4fc3f7;
-  --freeze: #90caf9;
-  --accent: #00e5ff;
-  --danger: #ff5370;
-  --warn: #ffb74d;
-  --ok: #69f0ae;
-  --text: #e8edf3;
-  --muted: #7a8a9a;
+  --bg: #f0f7ff;
+  --surface: #ffffff;
+  --surface2: #e8f3fd;
+  --border: #cce0f5;
+  --cold: #1e7fc1;
+  --freeze: #2563a8;
+  --accent: #0ea5e9;
+  --danger: #e03e5c;
+  --warn: #d97706;
+  --ok: #059669;
+  --text: #0f2136;
+  --muted: #5a7a99;
   --font-head: 'Syne', sans-serif;
   --font-mono: 'DM Mono', monospace;
 }
-
+ 
 body {
   background: var(--bg);
   color: var(--text);
@@ -27,15 +27,27 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
-
+ 
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(79,195,247,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79,195,247,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(14,165,233,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,165,233,0.05) 1px, transparent 1px);
   background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+ 
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
